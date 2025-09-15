@@ -1,7 +1,0 @@
-3. Proooooooofs¶
-🌞 Prouvez que tout est bien configuré, depuis la VM Azure
-
-installez azcopy dans la VM (suivez la doc officielle pour l'installer dans votre VM Azure)
-azcopy login --identity pour vous authentifier automatiquement
-utilisez azcopy pour écrire un fichier dans le Storage Container que vous avez créé
-utilisez azcopy pour lire le fichier que vous venez de push
