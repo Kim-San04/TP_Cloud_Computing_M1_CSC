@@ -6,6 +6,7 @@
 
     PS C:\Users\user\terraform_vm> terraform apply
     
+    
     data.http.my_ip: Reading...
     data.http.my_ip: Read complete after 0s [id=https://api.ipify.org]
     azurerm_resource_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg]
@@ -51,6 +52,8 @@
 #### 1
 
     PS C:\Users\user\terraform_vm> terraform apply
+
+    
     data.http.my_ip: Reading...
     data.http.my_ip: Read complete after 0s [id=https://api.ipify.org]
     azurerm_resource_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg]
