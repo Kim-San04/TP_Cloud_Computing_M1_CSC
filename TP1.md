@@ -23,7 +23,7 @@
 
 ### 🌞 Générer une paire de clés pour ce TP
 
-    PS C:\WINDOWS\system32> ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\cloud_tp1" -C "cloud_tp1 key" -N "myprivatekey"
+    PS C:\WINDOWS\system32> ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\cloud_tp1" -C "cloud_tp1 key" -N "************"
     
     Generating public/private ed25519 key pair.
     Your identification has been saved in C:\Users\user\.ssh\cloud_tp1
@@ -134,7 +134,7 @@
     
     {
       "fqdns": "",
-      "id": "/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/tp1-vm",
+      "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/tp1-vm",
       "location": "francecentral",
       "macAddress": "60-45-BD-19-CB-F9",
       "powerState": "VM running",
