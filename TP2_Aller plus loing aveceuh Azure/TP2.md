@@ -1,4 +1,4 @@
-## I. Network Security Group¶
+## I. Network Security Group
 
 ### 2. Ajouter un NSG au déploiement
 
