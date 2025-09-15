@@ -41,8 +41,8 @@
     
       Enter a value: yes
     
-    azurerm_public_ip.main: Modifying... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
-    azurerm_public_ip.main: Modifications complete after 6s [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
+    azurerm_public_ip.main: Modifying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
+    azurerm_public_ip.main: Modifications complete after 6s [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
     
     Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
     
@@ -56,14 +56,14 @@
     
     data.http.my_ip: Reading...
     data.http.my_ip: Read complete after 0s [id=https://api.ipify.org]
-    azurerm_resource_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg]
-    azurerm_public_ip.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
-    azurerm_network_security_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
-    azurerm_virtual_network.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet]
-    azurerm_subnet.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet/subnets/vm-subnet]
-    azurerm_network_interface.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic]
-    azurerm_network_interface_security_group_association.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic|/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
-    azurerm_linux_virtual_machine.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/terraform-vm]
+    azurerm_resource_group.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg]
+    azurerm_public_ip.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
+    azurerm_network_security_group.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+    azurerm_virtual_network.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet]
+    azurerm_subnet.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet/subnets/vm-subnet]
+    azurerm_network_interface.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic]
+    azurerm_network_interface_security_group_association.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic|/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+    azurerm_linux_virtual_machine.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/terraform-vm]
     
     Changes to Outputs:
       + vm_dns_name  = "hadime-tp2-vm.francecentral.cloudapp.azure.com"
@@ -83,11 +83,11 @@
     Outputs:
     
     vm_dns_name = "hadime-tp2-vm.francecentral.cloudapp.azure.com"
-    vm_public_ip = "4.233.85.200"
+    vm_public_ip = "x.x.x.x"
 
 #### 2
 
-    PS C:\Users\user\terraform_vm> ssh hadime@hadime-tp2-vm.francecentral.cloudapp.azure.com
+    PS C:\Users\user\terraform_vm> ssh hadime@had<......>.francecentral.cloudapp.azure.com
     Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1089-azure x86_64)
     
      * Documentation:  https://help.ubuntu.com
