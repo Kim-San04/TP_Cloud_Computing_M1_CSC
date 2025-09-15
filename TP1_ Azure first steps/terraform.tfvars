@@ -1,0 +1,5 @@
+resource_group_name = "tp1-rg"
+location            = "francecentral"
+admin_username      = "hadime"
+public_key_path     = "C:/Users/user/.ssh/cloud_tp1.pub"
+subscription_id     = "38c42894-8fc6-46fe-96ad-97aaca720174"
