@@ -32,14 +32,14 @@
       
       data.http.my_ip: Reading...
       data.http.my_ip: Read complete after 0s [id=https://api.ipify.org]
-      azurerm_resource_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg]
-      azurerm_public_ip.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
-      azurerm_network_security_group.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
-      azurerm_virtual_network.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet]
-      azurerm_subnet.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet/subnets/vm-subnet]
-      azurerm_network_interface.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic]
-      azurerm_network_interface_security_group_association.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic|/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
-      azurerm_linux_virtual_machine.main: Refreshing state... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/terraform-vm]
+      azurerm_resource_group.main: Refreshing state... [id=/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg]
+      azurerm_public_ip.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/publicIPAddresses/vm-ip]
+      azurerm_network_security_group.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+      azurerm_virtual_network.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet]
+      azurerm_subnet.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/virtualNetworks/vm-vnet/subnets/vm-subnet]
+      azurerm_network_interface.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic]
+      azurerm_network_interface_security_group_association.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic|/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+      azurerm_linux_virtual_machine.main: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Compute/virtualMachines/terraform-vm]
       
       Terraform used the selected providers to generate the following execution plan. Resource actions are
       indicated with the following symbols:
@@ -49,7 +49,7 @@
       
         # azurerm_network_security_group.main will be updated in-place
         ~ resource "azurerm_network_security_group" "main" {
-              id                  = "/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg"
+              id                  = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg"
               name                = "vm-nsg"
             ~ security_rule       = [
                 - {
@@ -101,26 +101,26 @@
       
         Enter a value: yes
       
-      azurerm_network_security_group.main: Modifying... [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
-      azurerm_network_security_group.main: Modifications complete after 3s [id=/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+      azurerm_network_security_group.main: Modifying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
+      azurerm_network_security_group.main: Modifications complete after 3s [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg]
       
       Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
       
       Outputs:
       
-      vm_public_ip = "4.233.85.200"
+      vm_public_ip = "x.x.x.x"
 
   * Une commande az pour obtenir toutes les infos liées à la VM
  
           PS C:\Users\user\terraform_vm> az network nic show --ids /subscriptions/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkInterfaces/vm-nic --query "networkSecurityGroup" -o json
     
         {
-          "id": "/subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg",
+          "id": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/tp1-rg/providers/Microsoft.Network/networkSecurityGroups/vm-nsg",
           "resourceGroup": "tp1-rg"
         }
 * Une commande ssh fonctionnelle
   
-      PS C:\Users\user\terraform_vm> ssh hadime@4.233.85.200
+      PS C:\Users\user\terraform_vm> ssh hadime@x.x.x.x
       
       Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1089-azure x86_64)
       
@@ -171,36 +171,3 @@
       
       ssh: connect to host 4.233.85.200 port 2222: Connection timed out
       PS C:\Users\user\terraform_vm>
-
-## II. Un ptit nom DNS
-
-### 1. Adapter le plan Terraform
-
-#### 🌞 Donner un nom DNS à votre VM
-
-### 2. Ajouter un output custom à terraform apply
-
-#### 🌞 Un ptit output nan ?
-
-### 3. Proooofs !
-
-#### 🌞 Proofs ! Donnez moi :
-
-
-## III. Blob storage
-
-
-### 2. Let's go
-
-#### 🌞 Compléter votre plan Terraform pour déployer du Blob Storage pour votre VM
-
-
-### 3. Proooooooofs
-
-#### 🌞 Prouvez que tout est bien configuré, depuis la VM Azure
-
-#### 🌞 Déterminez comment azcopy login --identity vous a authentifié
-
-#### 🌞 Requêtez un JWT d'authentification auprès du service que vous venez d'identifier, manuellement
-
-#### 🌞 Expliquez comment l'IP 169.254.169.254 peut être joignable
