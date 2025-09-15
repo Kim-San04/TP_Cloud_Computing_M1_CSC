@@ -75,7 +75,7 @@ voir fichier joint
       hadime@terraform-vm:~$ echo "Hello Hadime" > test.txt
       
       hadime@terraform-vm:~$ azcopy copy "test.txt" 
-      "https://hadimestorage.blob.core.windows.net/backupcontainer/test.txt"
+      "https://<storageaccount>.blob.core.windows.net/<container>/test.txt"
       
       INFO: Scanning...
       INFO: Autologin not specified.
@@ -106,7 +106,7 @@ voir fichier joint
       Total Number of Bytes Transferred: 13
       Final Job Status: Completed
       
-      hadime@terraform-vm:~$ azcopy copy "https://hadimestorage.blob.core.windows.net/backupcontainer/test.txt" "./downloaded.txt"
+      hadime@terraform-vm:~$ azcopy copy                         "https://<storageaccount>.blob.core.windows.net/<container>/test.txt" "./downloaded.txt"
       
       INFO: Scanning...
       INFO: Autologin not specified.
@@ -153,7 +153,7 @@ Ce token est signé par Azure et permet à la VM d’accéder aux ressources aut
     hadime@terraform-vm:~$ curl -H "Metadata:true" \
     >   "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://storage.azure.com"
     
-    {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkpZaEFjVFBNWl9MWDZEQmxPV1E3SG4wTmVYRSIsImtpZCI6IkpZaEFjVFBNWl9MWDZEQmxPV1E3SG4wTmVYRSJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNDEzNjAwY2YtYmQ0ZS00YzdjLThhNjEtNjllNzNjZGRmNzMxLyIsImlhdCI6MTc1Nzk3MDMxOCwibmJmIjoxNzU3OTcwMzE4LCJleHAiOjE3NTgwNTcwMTgsImFpbyI6ImsyUmdZT2ptdnY3Vk9iN05SRXJ5em01T3I5cHZBQT09IiwiYXBwaWQiOiJjZWNhMjcwYi1hMzlmLTQ2NTYtYjA1ZC1lYWY3YTU0MTQ1ZTciLCJhcHBpZGFjciI6IjIiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80MTM2MDBjZi1iZDRlLTRjN2MtOGE2MS02OWU3M2NkZGY3MzEvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiJhN2Y4ZTkzNy05ZjVjLTQ4Y2EtYmE0Ni1mNzg3ZjQ0YjgwYTciLCJyaCI6IjEuQVRzQXp3QTJRVTY5ZkV5S1lXbm5QTjMzTVlHbUJ1VFU4NmhDa0xiQ3NDbEpldkVWQVFBN0FBLiIsInN1YiI6ImE3ZjhlOTM3LTlmNWMtNDhjYS1iYTQ2LWY3ODdmNDRiODBhNyIsInRpZCI6IjQxMzYwMGNmLWJkNGUtNGM3Yy04YTYxLTY5ZTczY2RkZjczMSIsInV0aSI6IkduVlZDQWRwZmttZnBhcEJzYVphQVEiLCJ2ZXIiOiIxLjAiLCJ4bXNfZnRkIjoiZmJhUEc2UXhFRUVmQWszdnE4NHJabmwxeEZmYTNXNUxoQ0s4LTAwTS1Ia0JabkpoYm1ObFl5MWtjMjF6IiwieG1zX2lkcmVsIjoiMTggNyIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zLzM4YzQyODk0LThmYzYtNDZmZS05NmFkLTk3YWFjYTcyMDE3NC9yZXNvdXJjZWdyb3Vwcy90cDEtcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXJyYWZvcm0tdm0iLCJ4bXNfcmQiOiIwLjQyTGxZQkppdEJZUzRlQVVFbERwOWJWYnVlMjI3NlF2NmJveW1rMTZRRkVPSVlIR1pXeFBybnhlNFRSaDI2RU5tcDVWSHdFIiwieG1zX3RkYnIiOiJFVSJ9.gFTrVtWhEt4tKbynpp4a7_koJT9uEwKuD8q21QkJFsKzHS9qjadaW_WnmY23LGEfim0gV0Epetp2IbhPfiC8swxxJz_C0Mr-MAGFjLowmH7i0RU_cBz5n0Z5GubLOK-YFk-rR2z7DBRpLh_BEixpjigHMf2CP67aKV2sczBezrlis9OwGYprdOfXTzT3PIPNuI3qjhEiqLMdn4haBB5j0RZ1VfihEQFPXOaaQwkP3EN0IF4GQl1MsemG4xDxTB1til9BnvCkIDifigEHIqkzXws0Szpd0FK4Yvz5r34FilJBxjR4mgbAEr2_TwyNspbgUE1l5AMzxUk51b_OseczQQ","client_id":"ceca270b-a39f-4656-b05d-eaf7a54145e7","expires_in":"85841","expires_on":"1758057018","ext_expires_in":"86399","not_before":"1757970318","resource":"https://storage.azure.com","token_type":"Bearer"}
+    {""access_token":"<jwt_access_token>""}
 
 #### 🌞 Expliquez comment l'IP 169.254.169.254 peut être joignable
 
