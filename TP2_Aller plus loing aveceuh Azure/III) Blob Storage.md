@@ -106,7 +106,7 @@ voir fichier joint
       Total Number of Bytes Transferred: 13
       Final Job Status: Completed
       
-      hadime@terraform-vm:~$ azcopy copy                         "https://<storageaccount>.blob.core.windows.net/<container>/test.txt" "./downloaded.txt"
+      hadime@terraform-vm:~$ azcopy copy "https://<storageaccount>.blob.core.windows.net/<container>/test.txt" "./downloaded.txt"
       
       INFO: Scanning...
       INFO: Autologin not specified.
