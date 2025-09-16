@@ -38,6 +38,7 @@ J'ai ecrit un petit scipt 'get-secret.sh' et je le rend exécutable par la suite
       | jq -r .value)
     
     echo "Secret récupéré depuis la VM : $SECRET_VALUE"
+    
     --------------------------------------------------------------------------------------------
 
     hadime@terraform-vm:~$ ./get-secret.sh
