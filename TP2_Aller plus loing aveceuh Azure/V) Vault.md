@@ -3,7 +3,7 @@
 #### 🌞 Compléter votre plan Terraform et mettez en place une Azure Key Vault
 
 Voir fichier joint
-
+ 
 #### 3. Proof proof proof¶
 #### 🌞 Avec une commande az, afficher le secret
 
