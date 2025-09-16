@@ -148,11 +148,11 @@ stress la RAM (donner la commande)
     cheick.sawadogo@efrei.net  b69d114d-1545-4e67-b71c-3ed526281eb0                 a60fb625-0783-45fc-bc76-1107c3743ff6  2025-09-15T21:08:26.0647597Z  Informational  b69d114d-1545-4e67-b71c-3ed526281eb0  tp1-rg           tp1-rg               /subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Storage/storageAccounts/hadimestorage                                                                                         2025-09-15T21:09:52Z   38c42894-8fc6-46fe-96ad-97aaca720174  413600cf-bd4e-4c7c-8a61-69e73cddf731
     cheick.sawadogo@efrei.net  0f7c4044-a929-47ba-99a1-fbefe1c2e820                 d0a9405e-32d6-40f4-b184-9333b3804005  2025-09-15T21:08:04.8878785Z  Informational  0f7c4044-a929-47ba-99a1-fbefe1c2e820  tp1-rg           tp1-rg               /subscriptions/38c42894-8fc6-46fe-96ad-97aaca720174/resourceGroups/tp1-rg/providers/Microsoft.Storage/storageAccounts/hadimestorage                                                                                         2025-09-15T21:10:00Z   38c42894-8fc6-46fe-96ad-97aaca720174  413600cf-bd4e-4c7c-8a61-69e73cddf731
 
-* normalement t'as un mail
+* normalement t'as un mail ( oui le vois bien dans ma boite mail)
   
-* tu le vois dans la WebUI Azure
+* tu le vois dans la WebUI Azure( De même pour cette partie)
   
-* dans le compte-rendu, je veux une commande az qui montre que les alertes ont été levées
+* dans le compte-rendu, je veux une commande az qui montre que les alertes ont été levées ( ci-dessous
 
       PS C:\Users\user\terraform_vm> az monitor metrics alert update --name cpu-alert-terraform-vm --resource-group tp1-rg --enabled false
       
@@ -196,7 +196,9 @@ stress la RAM (donner la commande)
         "type": "Microsoft.Insights/metricAlerts",
         "windowSize": "PT5M"
       }
-      
+  
+      ---------------------------------------------------------------------------------------------------------------------------------------
+  
       PS C:\Users\user\terraform_vm> az monitor metrics alert update --name memory-alert-terraform-vm --resource-group tp1-rg --enabled false
       
       {
@@ -239,6 +241,8 @@ stress la RAM (donner la commande)
         "type": "Microsoft.Insights/metricAlerts",
         "windowSize": "PT5M"
       }
+
+          ---------------------------------------------------------------------------------------------------------------------------------------
       
       PS C:\Users\user\terraform_vm> az monitor metrics alert list --resource-group tp1-rg --query "[].{name:name,enabled:enabled}" --output table
       
