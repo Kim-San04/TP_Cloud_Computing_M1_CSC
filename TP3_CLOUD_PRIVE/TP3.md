@@ -434,7 +434,7 @@ démarrer et activer le service MySQL au démarrage
         [root@frontend ~]# sudo systemctl enable --now mysqld
         
 
-🌞 Setup MySQL
+#### 🌞 Setup MySQL
 
 un mot de passe temporaire pour l'utilisateur root de la base de données a été généré, il est visible dans /var/log/mysqld.log
 
@@ -474,12 +474,12 @@ connectez-vous à la base pour y effectuer les commandes SQL suivantes :
     mysql> SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;
     Query OK, 0 rows affected (0.00 sec)
 
-B. OpenNebula¶
-🌞 Ajouter les dépôts Open Nebula
+### B. OpenNebula¶
+#### 🌞 Ajouter les dépôts Open Nebula
 
 ajoutez le dépôt suivant à la liste de dépôts de votre machine
 
-🌞 Installer OpenNebula
+#### 🌞 Installer OpenNebula
 installez les paquets opennebula, opennebula-sunstone, opennebula-fireedge
 
     [root@frontend ~]# sudo dnf install -y opennebula opennebula-sunstone opennebula-fireedge
@@ -847,7 +847,7 @@ installez les paquets opennebula, opennebula-sunstone, opennebula-fireedge
     
     Complete!
 
-🌞 Configuration OpenNebula
+#### 🌞 Configuration OpenNebula
 
 dans le fichier /etc/one/oned.conf, Je définis correctement les paramètres de connexion à la base de données, je remplace la clause DB = par
 
@@ -860,7 +860,7 @@ dans le fichier /etc/one/oned.conf, Je définis correctement les paramètres de 
                  CONNECTIONS = 25,
                  COMPARE_BINARY = "no" ]
                  
-🌞 Créer un user pour se log sur la WebUI OpenNebula
+#### 🌞 Créer un user pour se log sur la WebUI OpenNebula
 
 pour ça, il faut se log en tant que l'utilisateur oneadmin sur le serveur
 une fois connecté en tant que oneadmin, inscrivez le user oneadmin et le password de votre choix dans le fichier /var/lib/one/.one/one_auth sous la forme user:password
@@ -872,7 +872,7 @@ Par exemple : vous stockez la chaîne oneadmin:super_password dans le fichier.
     [oneadmin@frontend ~]$ echo "oneadmin:MyWebUIPassword123!" > /var/lib/one/.one/one_auth
 
 
-🌞 Démarrer les services OpenNebula
+#### 🌞 Démarrer les services OpenNebula
 
 démarrez les services opennebula, opennebula-sunstone
 activez-les aussi au démarrage de la machine
@@ -884,7 +884,7 @@ activez-les aussi au démarrage de la machine
 
 C. Conf système¶
 
-🌞 Ouverture firewall
+#### 🌞 Ouverture firewall
 
 ouvrez les ports suivants, avec des commandes firewall-cmd :
 
@@ -905,11 +905,11 @@ ouvrez les ports suivants, avec des commandes firewall-cmd :
 
 
 
-II.2. Noeuds KVM
+### II.2. Noeuds KVM
 
 
-A. KVM
-🌞 Ajouter des dépôts supplémentaires
+### A. KVM
+#### 🌞 Ajouter des dépôts supplémentaires
 
 ajoutez les dépôts de OpenNebula, les mêmes que pour le Frontend !
 
@@ -985,7 +985,7 @@ ajoutez aussi les dépôts EPEL en exécutant :
     Terminé !
 
 
-🌞 Installer les libs MySQL
+#### 🌞 Installer les libs MySQL
 
     [root@kvm1 ~]# sudo dnf install -y mysql-community-server
     
@@ -1309,7 +1309,7 @@ ajoutez aussi les dépôts EPEL en exécutant :
     
     Terminé !
     
-🌞 Installer KVM
+#### 🌞 Installer KVM
 
 un paquet spécifique qui vient des dépôts OpenNebula : opennebula-node-kvm
 
@@ -2093,7 +2093,7 @@ un paquet spécifique qui vient des dépôts OpenNebula : opennebula-node-kvm
           virtiofsd-1.13.2-1.el9_6.x86_64
         
         Complete!
-🌞 Dépendances additionnelles
+#### 🌞 Dépendances additionnelles
 
        [root@kvm1 ~]# dnf install -y genisoimage
     Last metadata expiration check: 3:12:05 ago on Wed Sep 17 11:51:56 2025.
@@ -2133,7 +2133,7 @@ un paquet spécifique qui vient des dépôts OpenNebula : opennebula-node-kvm
       genisoimage-1.1.11-48.el9.x86_64       libusal-1.1.11-48.el9.x86_64
 
 
-🌞 Démarrer le service libvirtd
+#### 🌞 Démarrer le service libvirtd
 
        [root@kvm1 ~]# sudo systemctl start libvirtd
     [root@kvm1 ~]# sudo systemctl enable libvirtd
@@ -2171,8 +2171,8 @@ un paquet spécifique qui vient des dépôts OpenNebula : opennebula-node-kvm
     Sep 17 15:08:33 kvm1.one libvirtd[7748]: Unable to open /dev/kvm: No such f>
     lines 1-27/27 (END)
     
-B. Système
-🌞 Ouverture firewall
+### B. Système
+#### 🌞 Ouverture firewall
 
     [root@kvm1 ~]# sudo firewall-cmd --permanent --add-port=22/tcp
     success
@@ -2181,7 +2181,7 @@ B. Système
     [root@kvm1 ~]# sudo firewall-cmd --reload
     success
 
-🌞 Handle SSH
+#### 🌞 Handle SSH
 
   uniquement pour ce point, repassez en SSH sur frontend.one
   OpenNebula reposant sur des connexions SSH, elles doivent toutes se passer sans interaction humaine (pas de demande d'acceptation d'empreintes, ni de passwords par exemple)
@@ -2197,14 +2197,14 @@ B. Système
     Last login: Tue Sep 16 22:56:47 2025 from 10.3.1.10
     [oneadmin@kvm1 ~]$
     
-II.3. Setup réseau
+#### II.3. Setup réseau
 
 
-C. Préparer le bridge réseau¶
+#### C. Préparer le bridge réseau¶
 ➜ Ces étapes sont à effectuer uniquement sur kvm1.one dans un premier temps
 
 dans la partie IV du TP, quand vous mettrez en place kvm2.one, il faudra aussi refaire ça dessus
-🌞 Créer et configurer le bridge Linux, j'vous file tout, suivez le guide :
+#### 🌞 Créer et configurer le bridge Linux, j'vous file tout, suivez le guide :
 
 
     [root@kvm1 ~]# ip link add name vxlan_bridge type bridge
@@ -2264,7 +2264,7 @@ En faisant un ptit service systemd par exemple, que vous pouvez enable ensuite :
       rich rules:
 
 
-III. Utiliser la plateforme
+### III. Utiliser la plateforme
 
   ➜ Tester la connectivité à la VM
 
@@ -2318,11 +2318,11 @@ vous pouvez éventuellement ajouter l'IP de la machine hôte comme route par dé
     [root@localhost ~]#
 
 
-IV. Ajout d'un noeud et VXLAN¶
+### IV. Ajout d'un noeud et VXLAN¶
 Dernière partie : on configure kvm2.one et on teste les fonctionnalités réseau VXLAN : deux VMs sur des hyperviseurs différents se ping comme si elles étaient dans le même LAN !
 
-1. Ajout d'un noeud¶
-🌞 Setup de kvm2.one, à l'identique de kvm1.one excepté :
+### 1. Ajout d'un noeud¶
+#### 🌞 Setup de kvm2.one, à l'identique de kvm1.one excepté :
 
 une autre IP statique bien sûr
 
@@ -2364,3 +2364,14 @@ idem, pour le bridge, donnez-lui l'IP 10.220.220.202/24 (celle qui est juste apr
     [root@kvm2 ~]#
 
 une fois setup, ajoutez le dans la WebUI, dans Infrastructure > Hosts  ( c'est fait !!!)
+
+
+### 2. VM sur le deuxième noeud¶
+#### 🌞 Lancer une deuxième VM
+
+vous pouvez la forcer à tourner sur kvm2.one lors de sa création
+mettez la dans le même réseau que le premier kvm1.one
+assurez-vous que vous pouvez vous y connecter en SSH
+
+
+
