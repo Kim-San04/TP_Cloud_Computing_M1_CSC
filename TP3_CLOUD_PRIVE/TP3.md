@@ -882,7 +882,7 @@ activez-les aussi au démarrage de la machine
         Created symlink /etc/systemd/system/multi-user.target.wants/opennebula.service → /usr/lib/systemd/system/opennebula.service.
         Created symlink /etc/systemd/system/multi-user.target.wants/opennebula-sunstone.service → /usr/lib/systemd/system/opennebula-sunstone.service.
 
-C. Conf système¶
+### C. Conf système
 
 #### 🌞 Ouverture firewall
 
@@ -2197,10 +2197,10 @@ un paquet spécifique qui vient des dépôts OpenNebula : opennebula-node-kvm
     Last login: Tue Sep 16 22:56:47 2025 from 10.3.1.10
     [oneadmin@kvm1 ~]$
     
-#### II.3. Setup réseau
+### II.3. Setup réseau
 
 
-#### C. Préparer le bridge réseau¶
+### C. Préparer le bridge réseau
 ➜ Ces étapes sont à effectuer uniquement sur kvm1.one dans un premier temps
 
 dans la partie IV du TP, quand vous mettrez en place kvm2.one, il faudra aussi refaire ça dessus
@@ -2318,10 +2318,10 @@ vous pouvez éventuellement ajouter l'IP de la machine hôte comme route par dé
     [root@localhost ~]#
 
 
-### IV. Ajout d'un noeud et VXLAN¶
+### IV. Ajout d'un noeud et VXLAN
 Dernière partie : on configure kvm2.one et on teste les fonctionnalités réseau VXLAN : deux VMs sur des hyperviseurs différents se ping comme si elles étaient dans le même LAN !
 
-### 1. Ajout d'un noeud¶
+### 1. Ajout d'un noeud
 #### 🌞 Setup de kvm2.one, à l'identique de kvm1.one excepté :
 
 une autre IP statique bien sûr
@@ -2366,12 +2366,293 @@ idem, pour le bridge, donnez-lui l'IP 10.220.220.202/24 (celle qui est juste apr
 une fois setup, ajoutez le dans la WebUI, dans Infrastructure > Hosts  ( c'est fait !!!)
 
 
-### 2. VM sur le deuxième noeud¶
+### 2. VM sur le deuxième noeud
 #### 🌞 Lancer une deuxième VM
 
 vous pouvez la forcer à tourner sur kvm2.one lors de sa création
 mettez la dans le même réseau que le premier kvm1.one
 assurez-vous que vous pouvez vous y connecter en SSH
 
+            [oneadmin@frontend ~]$  ssh -J kvm2.one root@10.220.220.2
+            Activate the web console with: systemctl enable --now cockpit.socket
+            
+            Last failed login: Sat Sep 20 23:42:31 UTC 2025 from 10.220.220.202 on ssh:notty
+            There were 3 failed login attempts since the last successful login.
+            [root@localhost ~]#
 
+### 3. Connectivité entre les VMs
+#### 🌞 Les deux VMs doivent pouvoir se ping
+
+alors qu'elles sont sur des hyperviseurs différents, elles se ping comme si elles étaient dans le même réseau local !
+
+
+            [root@localhost ~]# ping 10.220.220.4
+            PING 10.220.220.4 (10.220.220.4) 56(84) bytes of data.
+            64 bytes from 10.220.220.4: icmp_seq=1 ttl=64 time=10.7 ms
+            64 bytes from 10.220.220.4: icmp_seq=2 ttl=64 time=2.51 ms
+            64 bytes from 10.220.220.4: icmp_seq=3 ttl=64 time=1.81 ms
+            64 bytes from 10.220.220.4: icmp_seq=4 ttl=64 time=5.91 ms
+            
+            --- 10.220.220.4 ping statistics ---
+            4 packets transmitted, 4 received, 0% packet loss, time 3017ms^C
+            rtt min/avg/max/mdev = 1.808/5.220/10.654/3.499 ms
+            [root@localhost ~]#
+            ---------------------------------------------------------------------------------
+
+            [oneadmin@frontend ~]$ ssh -J kvm1.one root@10.220.220.4
+            Warning: Permanently added '10.220.220.4' (ED25519) to the list of known hosts.
+            Activate the web console with: systemctl enable -- now cockpit.socket
+            
+            [root@localhost ~]# ping 10.220.220.3
+            PING 10.220.220.3 (10.220.220.3) 56(84) bytes of data.
+            64 bytes from 10.220.220.3: icmp_seq=1 ttl=64 time=7.16 ms
+            64 bytes from 10.220.220.3: icmp_seq=2 ttl=64 time=2.98 ms
+            
+            10.220.220.3 ping statistics
+            2 packets transmitted, 2 received, 0% packet loss, time 1013ms
+            rtt min/avg/max/mdev = 2.978/5.068/7.158/2.090 ms
+            [root@localhost ~l#
+
+
+### 4. Inspection du trafic
+#### 🌞 Téléchargez tcpdump sur l'un des noeuds KVM
+
+            [root@kvm1 ~]# sudo dnf install tcpdump -y
+            Rocky Linux 9 - BaseOS                       14 kB/s | 4.1 kB     00:00
+            Rocky Linux 9 - AppStream                    18 kB/s | 4.5 kB     00:00
+            Rocky Linux 9 - Extras                      8.9 kB/s | 2.9 kB     00:00
+            Dependencies resolved.
+            ============================================================================
+             Package        Architecture  Version                Repository        Size
+            ============================================================================
+            Installing:
+             tcpdump        x86_64        14:4.99.0-9.el9        appstream        542 k
+            
+            Transaction Summary
+            ============================================================================
+            Install  1 Package
+            
+            Total download size: 542 k
+            Installed size: 1.4 M
+            Downloading Packages:
+            tcpdump-4.99.0-9.el9.x86_64.rpm             1.8 MB/s | 542 kB     00:00
+            ----------------------------------------------------------------------------
+            Total                                       1.1 MB/s | 542 kB     00:00
+            Running transaction check
+            Transaction check succeeded.
+            Running transaction test
+            Transaction test succeeded.
+            Running transaction
+              Preparing        :                                                    1/1
+              Running scriptlet: tcpdump-14:4.99.0-9.el9.x86_64                     1/1
+              Installing       : tcpdump-14:4.99.0-9.el9.x86_64                     1/1
+              Running scriptlet: tcpdump-14:4.99.0-9.el9.x86_64                     1/1
+              Verifying        : tcpdump-14:4.99.0-9.el9.x86_64                     1/1
+            
+            Installed:
+              tcpdump-14:4.99.0-9.el9.x86_64
+            
+            Complete!
+            [root@kvm1 ~]#
+
+effectuez deux captures, pendant que les VMs sont en train de se ping :
+
+* une qui capture le trafic de l'interface réelle : eth1 probablement (celle qui a l'IP host-only, celle qui porte 10.3.1.12 sur kvm2 par exemple)
+
+            [root@kvm1 ~]# sudo tcpdump -i ens192 udp port 8472 -w vxlan-raw.pcap
+            dropped privs to tcpdump
+            tcpdump: listening on ens192, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+            
+          
+            ^C110 packets captured
+            110 packets received by filter
+            0 packets dropped by kernel
+
+* une autre qui capture le trafic de l'interface bridge VXLAN/ on l'a appelée vxlan-bridge dans le TP
+
+              [root@kvm1 ~]# sudo tcpdump -i vxlan_bridge -w vxlan-vm.pcap
+            dropped privs to tcpdump
+            tcpdump: listening on vxlan_bridge, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+            ^C52 packets captured
+            52 packets received by filter
+            0 packets dropped by kernel
+
+petit rappel d'une commande tcpdump :
+
+
+➜ Analysez les deux captures
+
+dans la capture de eth1 vous devriez juste voir du trafic UDP entre les deux noeuds
+
+            [root@kvm1 ~]# tshark -r vxlan-raw.pcap -Y "udp.port == 8472"
+            Running as user "root" and group "root". This could be dangerous.
+                1   0.000000    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+                2   0.003259    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+                3   1.004043    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+                4   1.005124    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+                5   2.003156    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+                6   2.005045    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+                7   3.002453    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+                8   3.003480    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+                9   4.001382    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               10   4.001899    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               11   4.974025    10.3.1.12 → 10.3.1.11    UDP 92 42726 → 8472 Len=50
+               12   4.975034    10.3.1.11 → 10.3.1.12    UDP 92 34960 → 8472 Len=50
+               13   5.005536    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               14   5.006384    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               15   5.379664    10.3.1.11 → 10.3.1.12    UDP 92 34960 → 8472 Len=50
+               16   5.381020    10.3.1.12 → 10.3.1.11    UDP 92 42726 → 8472 Len=50
+               17   6.017481    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               18   6.018993    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               19   7.016467    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               20   7.017745    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               21   8.017287    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               22   8.018469    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               23   9.016955    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               24   9.017537    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               25  10.017163    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               26  10.018075    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               27  11.025575    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               28  11.026271    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               29  12.034514    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               30  12.035428    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               31  13.033570    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               32  13.034183    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               33  14.032571    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               34  14.033446    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               35  15.031816    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               36  15.033114    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               37  16.030783    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               38  16.032630    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               39  17.033955    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               40  17.035443    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               41  18.041725    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               42  18.042060    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               43  19.042024    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               44  19.042565    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               45  20.040747    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               46  20.041438    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               47  21.050463    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               48  21.051355    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               49  22.049625    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               50  22.050834    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               51  23.048757    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               52  23.049156    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               53  24.059235    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               54  24.059738    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               55  25.057925    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               56  25.059152    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               57  26.064799    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               58  26.065833    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               59  27.063903    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               60  27.064808    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               61  28.073812    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               62  28.075881    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               63  29.071619    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               64  29.072261    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               65  30.070501    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               66  30.071759    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               67  30.964324    10.3.1.12 → 10.3.1.11    UDP 92 42726 → 8472 Len=50
+               68  30.964958    10.3.1.11 → 10.3.1.12    UDP 92 34960 → 8472 Len=50
+               69  31.080402    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               70  31.081006    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               71  32.079997    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               72  32.080561    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               73  33.083201    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               74  33.083829    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               75  34.081789    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               76  34.083222    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               77  35.087886    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               78  35.088904    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               79  36.087415    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               80  36.088025    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               81  36.102332    10.3.1.11 → 10.3.1.12    UDP 92 34960 → 8472 Len=50
+               82  36.102831    10.3.1.12 → 10.3.1.11    UDP 92 42726 → 8472 Len=50
+               83  37.096893    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               84  37.097493    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               85  38.095919    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               86  38.097105    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               87  39.094910    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               88  39.096076    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               89  40.100118    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               90  40.101055    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               91  41.099382    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               92  41.100569    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               93  42.100272    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               94  42.101273    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               95  43.107120    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               96  43.107495    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               97  44.105577    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+               98  44.106562    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+               99  45.105201    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              100  45.106450    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+              101  46.111375    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              102  46.112163    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+              103  47.109431    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              104  47.110078    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+              105  48.108922    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              106  48.109685    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+              107  49.107893    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              108  49.108848    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+              109  50.106556    10.3.1.12 → 10.3.1.11    UDP 148 56848 → 8472 Len=106
+              110  50.107599    10.3.1.11 → 10.3.1.12    UDP 148 51318 → 8472 Len=106
+            [root@kvm1 ~]#
+si vous regardez bien, vous devriez que ce trafic UDP contient lui-même des trames
+dans la capture de vxlan-bridge, vous devriez voir les "vraies" trames échangées par les deux VMs
+
+                   [root@kvm1 ~]# tshark -r vxlan-vm.pcap
+                  Running as user "root" and group "root". This could be dangerous.
+                      1   0.000000 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=1/256, ttl=64
+                      2   0.000909 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=1/256, ttl=64 (request in 1)
+                      3   0.001076 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=1/256, ttl=64
+                      4   0.999552 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=2/512, ttl=64
+                      5   0.999994 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=2/512, ttl=64 (request in 4)
+                      6   1.000063 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=2/512, ttl=64
+                      7   1.997917 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=3/768, ttl=64
+                      8   1.998450 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=3/768, ttl=64 (request in 7)
+                      9   1.998667 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=3/768, ttl=64
+                     10   3.002300 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=4/1024, ttl=64
+                     11   3.003336 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=4/1024, ttl=64 (request in 10)
+                     12   3.003856 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=4/1024, ttl=64
+                     13   3.055475 10.220.220.201 → 10.220.220.4 SSH 118 Client: Encrypted packet (len=52)
+                     14   3.057257 10.220.220.4 → 10.220.220.201 SSH 102 Server: Encrypted packet (len=36)
+                     15   3.057293 10.220.220.201 → 10.220.220.4 TCP 66 55818 → 22 [ACK] Seq=53 Ack=37 Win=548 Len=0 TSval=812527829 TSecr=3269628585
+                     16   4.001283 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=5/1280, ttl=64
+                     17   4.002207 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=5/1280, ttl=64 (request in 16)
+                     18   4.002370 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=5/1280, ttl=64
+                     19   4.946194 5e:c8:73:05:a4:8a → 02:00:0a:dc:dc:04 ARP 42 Who has 10.220.220.4? Tell 10.220.220.202
+                     20   4.948087 02:00:0a:dc:dc:04 → 5e:c8:73:05:a4:8a ARP 42 10.220.220.4 is at 02:00:0a:dc:dc:04
+                     21   5.000021 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=6/1536, ttl=64
+                     22   5.000915 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=6/1536, ttl=64 (request in 21)
+                     23   5.001081 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=6/1536, ttl=64
+                     24   5.440827 0a:b4:a5:4f:26:06 → 5e:c8:73:05:a4:8a ARP 42 Who has 10.220.220.202? Tell 10.220.220.201
+                     25   5.442845 5e:c8:73:05:a4:8a → 0a:b4:a5:4f:26:06 ARP 42 10.220.220.202 is at 5e:c8:73:05:a4:8a
+                     26   6.000983 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=7/1792, ttl=64
+                     27   6.002195 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=7/1792, ttl=64 (request in 26)
+                     28   6.999905 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=8/2048, ttl=64
+                     29   7.000585 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=8/2048, ttl=64 (request in 28)
+                     30   8.007846 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=9/2304, ttl=64
+                     31   8.008988 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=9/2304, ttl=64 (request in 30)
+                     32   9.006515 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=10/2560, ttl=64
+                     33   9.007054 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=10/2560, ttl=64 (request in 32)
+                     34  10.018122 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=11/2816, ttl=64
+                     35  10.018758 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=11/2816, ttl=64 (request in 34)
+                     36  11.022504 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=12/3072, ttl=64
+                     37  11.023144 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=12/3072, ttl=64 (request in 36)
+                     38  12.023776 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=13/3328, ttl=64
+                     39  12.024757 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=13/3328, ttl=64 (request in 38)
+                     40  12.303496 10.220.220.201 → 10.220.220.4 SSH 118 Client: Encrypted packet (len=52)
+                     41  12.304494 10.220.220.4 → 10.220.220.201 SSH 102 Server: Encrypted packet (len=36)
+                     42  12.304511 10.220.220.201 → 10.220.220.4 TCP 66 55818 → 22 [ACK] Seq=105 Ack=73 Win=548 Len=0 TSval=812537077 TSecr=3269637833
+                     43  13.021199 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=14/3584, ttl=64
+                     44  13.022082 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=14/3584, ttl=64 (request in 43)
+                     45  14.028359 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=15/3840, ttl=64
+                     46  14.028914 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=15/3840, ttl=64 (request in 45)
+                     47  15.025486 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=16/4096, ttl=64
+                     48  15.026455 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=16/4096, ttl=64 (request in 47)
+                     49  16.026833 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=17/4352, ttl=64
+                     50  16.027376 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=17/4352, ttl=64 (request in 49)
+                     51  17.030466 10.220.220.202 → 10.220.220.4 ICMP 98 Echo (ping) request  id=0x000a, seq=18/4608, ttl=64
+                     52  17.031441 10.220.220.4 → 10.220.220.202 ICMP 98 Echo (ping) reply    id=0x000a, seq=18/4608, ttl=64 (request in 51)
+                  [root@kvm1 ~]#
 
